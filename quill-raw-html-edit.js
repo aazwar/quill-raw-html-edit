@@ -94,7 +94,7 @@ function prettify(input) {
       if (node.attributes[k]) {
         result += k + '="' + node.attributes[k] + '" '
       } else {
-        result += k + '"" ';
+        result += k + '="" ';
       }
     });
     result += node.closed ? " />" : ">";
