@@ -47,7 +47,7 @@ function prettify(input) {
             cursor.tag === undefined ||
             cursor.tag.toLowerCase() !== tag.toLowerCase()
           ) {
-            throw new Error("Closing tag doesn't match");
+            throw new Error("Closing tag doesn't match: " + cursor.tag);
           }
           run = false;
         })
@@ -94,7 +94,7 @@ function prettify(input) {
       if (node.attributes[k]) {
         result += k + '="' + node.attributes[k] + '" '
       } else {
-        result += k + '" ';
+        result += k + '"" ';
       }
     });
     result += node.closed ? " />" : ">";
@@ -112,7 +112,7 @@ function prettify(input) {
   root.children.forEach(e => {
     result += format(e, 0) + "\n";
   })
-  result = result.replace(/ >/g, '>').replace(/ +\/>/g, ' />').replace(/(\w)\s+</g, "$1<").replace(/(\n\s+)?\n/g, "\n");
+  result = result.replace(/ >/g, '>').replace(/ +\/>/g, ' />').replace(/(?<=[^>\s])\s+</g, "<").replace(/(\n\s+)?\n/g, "\n");
   return result;
 }
 

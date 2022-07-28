@@ -1,7 +1,7 @@
 {
   "name": "@roel.id/quill-raw-html-edit",
   "description": "A Quill rich text editor Module which adds a raw html editor",
-  "version": "0.0.1",
+  "version": "0.1",
   "main": "quill-raw-html-edit.js",
   "repository": {
     "type": "git",
