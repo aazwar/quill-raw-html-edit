@@ -1,6 +1,9 @@
 # quill-raw-html-edit
 Quill.js Module which allows you to quickly view/edit the raw HTML in the editor
 
+## Instalation
+`npm i @roel.id/quill-raw-html-edit`
+
 ## Quickstart (Javascript)
 
 ``` html
