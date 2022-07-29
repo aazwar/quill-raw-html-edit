@@ -122,7 +122,7 @@ class EditHtml {
     const toolbarModule = quill.getModule("toolbar");
     if (!toolbarModule) {
       throw new Error(
-        'quill.htmlEditButton requires the "toolbar" module to be included too'
+        'quill-raw-html-edit requires the "toolbar" module to be included too'
       );
     }
     let bc = document.createElement('span');

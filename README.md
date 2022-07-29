@@ -1,5 +1,11 @@
+
 # quill-raw-html-edit
-Quill.js Module which allows you to quickly view/edit the raw HTML in the editor
+
+![npm (scoped)](https://img.shields.io/npm/v/@roel.id/quill-raw-html-edit?style=plastic)
+![NPM](https://img.shields.io/npm/l/@roel.id/quill-raw-html-edit?style=plastic)
+![npm](https://img.shields.io/npm/dm/@roel.id/quill-raw-html-edit?style=plastic)
+
+Quill.js Module which allows you to quickly view/edit the raw HTML in the editor. Quick & simple, accepting any tags and attributes.
 
 ## Instalation
 `npm i @roel.id/quill-raw-html-edit`

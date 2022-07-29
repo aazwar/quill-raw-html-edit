@@ -16,6 +16,10 @@
     "raw",
     "edit"
   ],
+  "files": [
+    "*.js",
+    "gulpfile.js"
+  ],
   "bugs": {
     "url": "https://github.com/aazwar/quill-raw-html-edit/issues"
   },
