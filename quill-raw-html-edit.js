@@ -3,10 +3,10 @@ function prettify(input) {
   // improvement: handling self closing tag, return prettify string
 
   const VOID_TAGS = [
-    'area', 'base', 'basefont', 'br', 'col', 'command', 'embed', 'frame', 'hr', 'img', 'input', 'isindex', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr', 'circle', 'ellipse', 'line', 'path', 'polygon', 'polyline', 'rect', 'stop', 'use'
+    'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'isindex', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr',
   ];
   const BREAK_TAGS = [
-    'blockquote', 'body', 'br', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'hr', 'link', 'meta', 'p', 'table', 'td', 'title', 'tr', 'nav', 'section', 'header', 'footer', 'main', 'aside', 'article', 'address'
+    'address', 'article', 'aside', 'audio', 'blockquote', 'body', 'canvas', 'br', 'datalist', 'dd', 'div', 'dl', 'dt', 'details', 'form', 'fieldset', 'figure', 'footer', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hr', 'link', 'main', 'meta', 'nav', 'optgroup', 'p', 'picture', 'pre', 'ruby', 'script', 'section', 'style', 'svg', 'table', 'tbody', 'template', 'title', 'tr', 'ul', 'video'
   ];
 
   const vtag = tag => VOID_TAGS.includes(tag.toLowerCase());
@@ -53,7 +53,7 @@ function prettify(input) {
         })
         // Parse a text node
         || pull(/^([^<]+)/, text => {
-          ttext = text.replace(/^\s+|\s+$/g, '').replace(/\n/g, ' ').replace(/ +/, ' ');
+          ttext = text.trim().replace(/\s+|\n/g, ' ');
           ttext && cursor.children.push({
             text: ttext
           });
@@ -65,7 +65,7 @@ function prettify(input) {
   }
 
   function parse_attributes(cursor) {
-    while (pull(/^\s+([a-zA-Z][a-zA-Z0-9\-]+)(?:="([^"]*)")?/, (
+    while (pull(/^\s+([a-zA-Z][a-zA-Z0-9\-]*)(?:="([^"]*)")?/, (
       name,
       value
     ) => {
@@ -74,7 +74,7 @@ function prettify(input) {
     if (match = pull(/^\s*\/?>/)) {
       return match.endsWith('/>')
     } else {
-      throw new Error("Malformed open tag");
+      throw new Error("Malformed open tag: " + cursor.tag);
     }
   }
   try {
@@ -98,6 +98,7 @@ function prettify(input) {
       }
     });
     result += node.closed ? " />" : ">";
+    if (btag(node.tag)) result += "\n  " + indent;
     node.children.forEach(c => {
       result += format(c, level + 1)
     });
@@ -112,7 +113,7 @@ function prettify(input) {
   root.children.forEach(e => {
     result += format(e, 0) + "\n";
   })
-  result = result.replace(/ >/g, '>').replace(/ +\/>/g, ' />').replace(/(?<=[^>\s])\s+</g, "<").replace(/(\n\s+)?\n/g, "\n");
+  result = result.replace(/ >/g, '>').replace(/ +\/>/g, ' />').replace(/(\n\s+)?\n+/g, "\n");
   return result;
 }
 
