@@ -6,11 +6,16 @@ function prettify(input) {
     'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'isindex', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr',
   ];
   const BREAK_TAGS = [
-    'address', 'article', 'aside', 'audio', 'blockquote', 'body', 'canvas', 'br', 'datalist', 'dd', 'div', 'dl', 'dt', 'details', 'form', 'fieldset', 'figure', 'footer', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hr', 'link', 'main', 'meta', 'nav', 'optgroup', 'p', 'picture', 'pre', 'ruby', 'script', 'section', 'style', 'svg', 'table', 'tbody', 'template', 'title', 'tr', 'ul', 'video'
+    'address', 'article', 'aside', 'audio', 'blockquote', 'body', 'br', 'canvas', 'datalist', 'dd', 'details', 'div', 'dl', 'fieldset', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hr', 'link', 'main', 'meta', 'nav', 'ol', 'optgroup', 'p', 'picture', 'pre', 'ruby', 'script', 'section', 'style', 'svg', 'table', 'tbody', 'template', 'tfoot', 'thead', 'title', 'tr', 'ul', 'video'
+  ];
+
+  const BREAK_TAGS_END = [
+    'dd', 'dt', 'figcaption', 'li', 'option', 'summary', 'td',
   ];
 
   const vtag = tag => VOID_TAGS.includes(tag.toLowerCase());
   const btag = tag => BREAK_TAGS.includes(tag.toLowerCase());
+  const btage = tag => BREAK_TAGS_END.includes(tag.toLowerCase());
 
   const root = {
     children: []
@@ -85,10 +90,11 @@ function prettify(input) {
   // return root.children;
   function format(node, level = 0) {
     let indent = "  ".repeat(level);
-    if (node.text)
-      return node.text;
+    if (node.text) {
+      return node.text
+    }
     let result = "";
-    if (level && btag(node.tag)) result += "\n" + indent;
+    if (level && (btag(node.tag) || btage(node.tag))) result += "\n" + indent;
     result += `<${node.tag} `;
     Object.keys(node.attributes).forEach(k => {
       if (node.attributes[k]) {
